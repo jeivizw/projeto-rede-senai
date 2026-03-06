@@ -33,7 +33,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Efeito hover para as estrelas */
         .star-rating i:hover ~ i { color: #cbd5e1 !important; }
         .dark .star-rating i:hover ~ i { color: #475569 !important; }
         .star-rating:hover i { color: #fbbf24; }
@@ -74,7 +73,6 @@
     <main class="max-w-7xl mx-auto px-4 md:px-6 mt-8 flex gap-8">
         
         <aside id="sidebar-menu" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-800 lg:bg-transparent dark:lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 lg:static lg:block lg:shrink-0 flex flex-col h-full lg:h-auto">
-            
             <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100 dark:border-slate-700 lg:hidden shrink-0">
                 <span class="font-bold text-lg tracking-tight">Menu</span>
                 <button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-red-500 text-xl">
@@ -202,9 +200,9 @@
             </div>
 
             <div id="content-vitrine" class="section-content grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-100 dark:border-slate-700 shadow-sm text-center hover:shadow-md transition cursor-pointer">
-                    <div class="h-32 bg-slate-50 dark:bg-slate-700/50 rounded-xl mb-3 flex items-center justify-center text-slate-300 dark:text-slate-500 italic text-xs">Foto do Projeto</div>
-                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">Braço Robótico</h4>
+                <div class="col-span-full py-12 text-center border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl">
+                    <i class="fa-solid fa-folder-open text-4xl text-slate-300 mb-3"></i>
+                    <p class="text-slate-500 dark:text-slate-400">Nenhum projeto em destaque no momento.</p>
                 </div>
             </div>
 
@@ -279,11 +277,9 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3"></div>
 
     <script>
-        // Classes ativas separadas para não dar erro no CSS editor
         const activeClasses = ['text-senai-red', 'bg-red-50', 'dark:bg-red-900/20', 'font-semibold', 'shadow-sm'];
         const inactiveClasses = ['text-slate-500', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800'];
 
-        // --- 1. MENU MOBILE ---
         function toggleMobileMenu() {
             const sidebar = document.getElementById('sidebar-menu');
             const overlay = document.getElementById('mobile-menu-overlay');
@@ -293,7 +289,7 @@
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
                 setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                document.body.style.overflow = 'hidden'; // Impede o scroll no fundo
+                document.body.style.overflow = 'hidden'; 
             } else {
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('opacity-0');
@@ -302,21 +298,16 @@
             }
         }
 
-        // --- 2. NAVEGAÇÃO DE ABAS ---
         function switchTab(tabId) {
-            // Esconde todas as abas
             document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
-            // Mostra a aba alvo
             const targetSection = document.getElementById('content-' + tabId);
             if(targetSection) targetSection.classList.add('active');
 
-            // Reseta todos os botões do menu
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove(...activeClasses);
                 btn.classList.add(...inactiveClasses);
             });
             
-            // Ativa o botão selecionado
             const activeBtn = document.getElementById('btn-' + tabId);
             if(activeBtn) {
                 activeBtn.classList.remove(...inactiveClasses);
@@ -325,13 +316,14 @@
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // Fecha o menu mobile se estiver aberto (tela menor que 1024px)
             if (window.innerWidth < 1024) {
-                toggleMobileMenu();
+                const sidebar = document.getElementById('sidebar-menu');
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    toggleMobileMenu();
+                }
             }
         }
 
-        // --- 3. MODO ESCURO ---
         const themeIcon = document.getElementById('theme-icon');
         function updateIcon(isDark) {
             themeIcon.className = isDark ? 'fa-solid fa-sun text-xl' : 'fa-solid fa-moon text-xl';
@@ -348,18 +340,15 @@
             updateIcon(true);
         }
 
-        // --- 4. SISTEMA DE NOTIFICAÇÃO (TOAST) ---
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            
             const icon = type === 'success' ? '<i class="fa-solid fa-circle-check text-green-500"></i>' : '<i class="fa-solid fa-circle-info text-blue-500"></i>';
             
             toast.className = `bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-lg rounded-xl p-4 flex items-center gap-3 transform transition-all duration-300 translate-y-10 opacity-0`;
             toast.innerHTML = `${icon} <span class="text-sm font-medium text-slate-800 dark:text-slate-200">${message}</span>`;
             
             container.appendChild(toast);
-            
             setTimeout(() => { toast.classList.remove('translate-y-10', 'opacity-0'); }, 10);
             setTimeout(() => {
                 toast.classList.add('translate-y-10', 'opacity-0');
@@ -367,11 +356,9 @@
             }, 3000);
         }
 
-        // --- 5. AVALIAÇÃO COM ESTRELAS ---
         function rateTopic(stars, containerId) {
             const container = document.getElementById(containerId);
             const starElements = container.querySelectorAll('i');
-            
             container.classList.remove('star-rating'); 
 
             starElements.forEach((star, index) => {
@@ -383,11 +370,9 @@
                     star.classList.add('text-slate-300', 'dark:text-slate-600');
                 }
             });
-
             showToast(`Voto de ${stars} estrela(s) computado!`, 'success');
         }
 
-        // --- 6. PUBLICAÇÃO DE POSTS ---
         let postsCount = 12; 
         function publishPost() {
             const textarea = document.getElementById('post-textarea');
@@ -399,7 +384,7 @@
             }
 
             const newPost = document.createElement('article');
-            newPost.className = 'bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-5 transition hover:shadow-md active';
+            newPost.className = 'bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-5 transition hover:shadow-md';
             newPost.style.animation = 'fadeIn 0.4s ease-out';
             
             newPost.innerHTML = `
@@ -424,7 +409,6 @@
             textarea.value = '';
             postsCount++;
             document.getElementById('user-posts-count').innerText = postsCount;
-
             showToast("Publicação enviada com sucesso!", "success");
         }
     </script>
