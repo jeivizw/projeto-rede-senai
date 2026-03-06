@@ -24,80 +24,90 @@
         }
     </script>
     
-    <style type="text/tailwindcss">
-        .tab-active { 
-            @apply text-senai-red bg-red-50 dark:bg-red-900/20 font-semibold shadow-sm; 
-        }
+    <style>
         .section-content { display: none; }
-        .section-content.active { display: block; }
+        .section-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Efeito hover para as estrelas */
         .star-rating i:hover ~ i { color: #cbd5e1 !important; }
         .dark .star-rating i:hover ~ i { color: #475569 !important; }
         .star-rating:hover i { color: #fbbf24; }
-        
-        /* Classe para estrelas já votadas */
-        .star-voted { @apply text-amber-400 !important; }
     </style>
 </head>
 <body class="bg-bg-light dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-200">
 
-    <header class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 dark:border-slate-700 transition-colors duration-200">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex justify-between items-center">
-            <div class="flex items-center gap-8">
+    <header class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100 dark:border-slate-700 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleMobileMenu()" class="lg:hidden text-slate-600 dark:text-slate-300 hover:text-senai-red transition text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                
                 <div class="flex items-center gap-2 cursor-pointer" onclick="switchTab('feed')">
                     <div class="w-8 h-8 bg-senai-red rounded-lg flex items-center justify-center text-white">
                         <i class="fa-solid fa-bolt-lightning"></i>
                     </div>
-                    <span class="font-bold text-lg tracking-tight">Conecta<span class="text-senai-red">SENAI</span></span>
+                    <span class="font-bold text-lg tracking-tight hidden sm:block">Conecta<span class="text-senai-red">SENAI</span></span>
                 </div>
             </div>
             
-            <div class="flex items-center gap-5">
+            <div class="flex items-center gap-4 md:gap-5">
                 <button onclick="toggleDarkMode()" class="text-slate-500 hover:text-amber-500 dark:text-slate-400 dark:hover:text-amber-400 transition w-8 h-8 flex items-center justify-center">
                     <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
                 </button>
-                <button onclick="switchTab('config')" class="text-slate-500 hover:text-senai-red dark:text-slate-400 transition">
-                    <i class="fa-solid fa-gear text-xl"></i>
-                </button>
-                <div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 mx-2"></div>
+                <div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-700 mx-1 md:mx-2"></div>
                 <div onclick="switchTab('perfil')" class="flex items-center gap-3 cursor-pointer group">
                     <span class="text-sm font-medium text-slate-600 dark:text-slate-300 group-hover:text-senai-red dark:group-hover:text-senai-red transition hidden md:block">João Silva</span>
-                    <img src="https://i.pravatar.cc/150?img=11" class="w-9 h-9 rounded-full ring-2 ring-slate-100 dark:ring-slate-700 group-hover:ring-senai-red dark:group-hover:ring-senai-red transition">
+                    <img src="https://i.pravatar.cc/150?img=11" class="w-9 h-9 rounded-full ring-2 ring-slate-100 dark:ring-slate-700 group-hover:ring-senai-red transition">
                 </div>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 mt-8 flex gap-8">
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden opacity-0 transition-opacity duration-300" onclick="toggleMobileMenu()"></div>
+
+    <main class="max-w-7xl mx-auto px-4 md:px-6 mt-8 flex gap-8">
         
-        <aside class="hidden lg:block w-64 shrink-0">
-            <nav class="sticky top-24 space-y-1 text-sm">
-                <button onclick="switchTab('feed')" id="btn-feed" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition tab-active">
-                    <i class="fa-solid fa-shapes text-lg"></i> Feed Social
+        <aside id="sidebar-menu" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-800 lg:bg-transparent dark:lg:bg-transparent shadow-2xl lg:shadow-none transform -translate-x-full lg:translate-x-0 transition-transform duration-300 lg:static lg:block lg:shrink-0 flex flex-col h-full lg:h-auto">
+            
+            <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100 dark:border-slate-700 lg:hidden shrink-0">
+                <span class="font-bold text-lg tracking-tight">Menu</span>
+                <button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-red-500 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
-                <button onclick="switchTab('melhorias')" id="btn-melhorias" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-comment-medical text-lg"></i> Melhoria Contínua
+            </div>
+
+            <nav class="p-4 lg:p-0 lg:sticky lg:top-24 space-y-1 text-sm overflow-y-auto flex-1">
+                <button onclick="switchTab('feed')" id="btn-feed" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl transition text-senai-red bg-red-50 dark:bg-red-900/20 font-semibold shadow-sm">
+                    <i class="fa-solid fa-shapes text-lg w-5 text-center"></i> Feed Social
                 </button>
-                <button onclick="switchTab('vitrine')" id="btn-vitrine" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-rocket text-lg"></i> Vitrine de Projetos
+                <button onclick="switchTab('melhorias')" id="btn-melhorias" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-comment-medical text-lg w-5 text-center"></i> Melhoria Contínua
                 </button>
-                <button onclick="switchTab('vagas')" id="btn-vagas" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                    <i class="fa-solid fa-briefcase text-lg"></i> Oportunidades
+                <button onclick="switchTab('vitrine')" id="btn-vitrine" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-rocket text-lg w-5 text-center"></i> Vitrine de Projetos
+                </button>
+                <button onclick="switchTab('vagas')" id="btn-vagas" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-briefcase text-lg w-5 text-center"></i> Oportunidades
                 </button>
                 
                 <div class="pt-6 mt-6 border-t border-slate-200 dark:border-slate-700">
-                    <button onclick="switchTab('perfil')" id="btn-perfil" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-user text-lg"></i> Meu Perfil
+                    <button onclick="switchTab('perfil')" id="btn-perfil" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-user text-lg w-5 text-center"></i> Meu Perfil
                     </button>
-                    <button onclick="switchTab('config')" id="btn-config" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-                        <i class="fa-solid fa-sliders text-lg"></i> Configurações
+                    <button onclick="switchTab('config')" id="btn-config" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-sliders text-lg w-5 text-center"></i> Configurações
                     </button>
                 </div>
             </nav>
         </aside>
 
-        <section class="flex-1 max-w-2xl pb-20">
+        <section class="flex-1 max-w-2xl pb-20 w-full">
             
             <div id="content-feed" class="section-content active space-y-6">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-100 dark:border-slate-700 transition-colors">
@@ -125,7 +135,7 @@
                         <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100 mb-2">Protótipo: Automação Residencial Sustentável</h3>
                         <p class="text-slate-700 dark:text-slate-300 text-sm mb-4">Finalizamos o projeto de TCC! Um sistema de automação focado em redução do consumo de energia. O que acharam da ideia?</p>
                         
-                        <div class="flex items-center gap-3 mb-5 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700 w-max">
+                        <div class="flex items-center gap-3 mb-5 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-100 dark:border-slate-700 flex-wrap w-fit">
                             <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Avaliação Geral</span>
                             <div class="flex text-amber-400 text-sm">
                                 <i class="fa-solid fa-star"></i>
@@ -143,7 +153,7 @@
                             </h5>
                             
                             <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-100 dark:border-blue-900/30">
-                                <div class="flex items-center justify-between mb-2">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
                                     <div class="flex items-center gap-2">
                                         <div class="w-6 h-6 bg-senai-blue rounded-full flex items-center justify-center text-white text-[10px]">
                                             <i class="fa-solid fa-user-tie"></i>
@@ -151,7 +161,7 @@
                                         <span class="font-semibold text-sm text-slate-800 dark:text-slate-200">Prof. Carlos Mendes</span>
                                         <span class="text-[10px] bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 px-2 py-0.5 rounded-full font-bold">Docente</span>
                                     </div>
-                                    <div class="flex text-amber-500 text-xs">
+                                    <div class="flex text-amber-500 text-xs sm:ml-0 ml-8">
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
                                         <i class="fa-solid fa-star"></i>
@@ -159,7 +169,7 @@
                                         <i class="fa-solid fa-star"></i>
                                     </div>
                                 </div>
-                                <p class="text-sm text-slate-700 dark:text-slate-300 ml-8">Excelente aplicação prática! A viabilidade de mercado desse projeto é altíssima. Sugiro apenas detalhar mais a lista de componentes na documentação final.</p>
+                                <p class="text-sm text-slate-700 dark:text-slate-300 ml-0 sm:ml-8 mt-2 sm:mt-0">Excelente aplicação prática! A viabilidade de mercado desse projeto é altíssima. Sugiro apenas detalhar mais a lista de componentes na documentação final.</p>
                             </div>
                         </div>
                     </article>
@@ -168,13 +178,11 @@
 
             <div id="content-melhorias" class="section-content space-y-6">
                 <h2 class="text-2xl font-bold px-2 text-slate-900 dark:text-white">Melhorias e Feedback</h2>
-                
                 <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden transition-colors">
                     <div class="absolute top-0 right-0 px-4 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-500 text-[10px] font-bold uppercase rounded-bl-xl">Em Análise</div>
-                    <h3 class="font-bold text-slate-800 dark:text-slate-100">Preços e Qualidade da Cantina</h3>
+                    <h3 class="font-bold text-slate-800 dark:text-slate-100 mt-2">Preços e Qualidade da Cantina</h3>
                     <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Sugiro uma revisão nas opções de lanches naturais. Os valores atuais não condizem com a qualidade entregue aos alunos.</p>
-                    
-                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div>
                             <span class="block text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">Avalie esta pauta:</span>
                             <div id="star-container-1" class="flex gap-1 text-slate-300 dark:text-slate-600 text-xl cursor-pointer star-rating transition-colors">
@@ -185,7 +193,7 @@
                                 <i class="fa-solid fa-star transition-transform hover:scale-125" onclick="rateTopic(5, 'star-container-1')"></i>
                             </div>
                         </div>
-                        <div class="text-right">
+                        <div class="text-left sm:text-right">
                             <span class="block text-2xl font-bold text-slate-800 dark:text-slate-100">2.1</span>
                             <span class="text-[10px] text-slate-400 dark:text-slate-500 uppercase">Média Atual</span>
                         </div>
@@ -193,7 +201,7 @@
                 </div>
             </div>
 
-            <div id="content-vitrine" class="section-content grid grid-cols-2 gap-4">
+            <div id="content-vitrine" class="section-content grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-100 dark:border-slate-700 shadow-sm text-center hover:shadow-md transition cursor-pointer">
                     <div class="h-32 bg-slate-50 dark:bg-slate-700/50 rounded-xl mb-3 flex items-center justify-center text-slate-300 dark:text-slate-500 italic text-xs">Foto do Projeto</div>
                     <h4 class="font-bold text-sm text-slate-900 dark:text-white">Braço Robótico</h4>
@@ -201,12 +209,12 @@
             </div>
 
             <div id="content-vagas" class="section-content space-y-4">
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 shadow-sm flex justify-between items-center transition-colors">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-4 transition-colors">
                     <div>
                         <h4 class="font-bold text-sm text-slate-900 dark:text-white">Estágio Mecânica</h4>
                         <p class="text-xs text-slate-400 dark:text-slate-500 font-medium">Indústria Metalúrgica S.A.</p>
                     </div>
-                    <button class="bg-senai-blue hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-xs font-bold transition">Ver Vaga</button>
+                    <button class="bg-senai-blue hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-bold transition w-full sm:w-auto">Ver Vaga</button>
                 </div>
             </div>
 
@@ -240,8 +248,8 @@
 
         </section>
 
-        <aside class="hidden xl:block w-72 space-y-6">
-            <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 transition-colors">
+        <aside class="hidden xl:block w-72 space-y-6 shrink-0">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-100 dark:border-slate-700 transition-colors sticky top-24">
                 <h3 class="font-bold text-sm mb-4 text-slate-900 dark:text-white">Métricas da Unidade</h3>
                 <div class="space-y-4">
                     <div class="space-y-1">
@@ -271,26 +279,59 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3"></div>
 
     <script>
-        // --- 1. NAVEGAÇÃO DE ABAS ---
+        // Classes ativas separadas para não dar erro no CSS editor
+        const activeClasses = ['text-senai-red', 'bg-red-50', 'dark:bg-red-900/20', 'font-semibold', 'shadow-sm'];
+        const inactiveClasses = ['text-slate-500', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800'];
+
+        // --- 1. MENU MOBILE ---
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar-menu');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+
+            if (isClosed) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden'; // Impede o scroll no fundo
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        // --- 2. NAVEGAÇÃO DE ABAS ---
         function switchTab(tabId) {
+            // Esconde todas as abas
             document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
+            // Mostra a aba alvo
             const targetSection = document.getElementById('content-' + tabId);
             if(targetSection) targetSection.classList.add('active');
 
-            document.querySelectorAll('aside nav button').forEach(btn => {
-                btn.classList.remove('tab-active');
-                btn.classList.add('text-slate-500', 'dark:text-slate-400');
+            // Reseta todos os botões do menu
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove(...activeClasses);
+                btn.classList.add(...inactiveClasses);
             });
             
+            // Ativa o botão selecionado
             const activeBtn = document.getElementById('btn-' + tabId);
             if(activeBtn) {
-                activeBtn.classList.add('tab-active');
-                activeBtn.classList.remove('text-slate-500', 'dark:text-slate-400');
+                activeBtn.classList.remove(...inactiveClasses);
+                activeBtn.classList.add(...activeClasses);
             }
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Fecha o menu mobile se estiver aberto (tela menor que 1024px)
+            if (window.innerWidth < 1024) {
+                toggleMobileMenu();
+            }
         }
 
-        // --- 2. MODO ESCURO ---
+        // --- 3. MODO ESCURO ---
         const themeIcon = document.getElementById('theme-icon');
         function updateIcon(isDark) {
             themeIcon.className = isDark ? 'fa-solid fa-sun text-xl' : 'fa-solid fa-moon text-xl';
@@ -307,7 +348,7 @@
             updateIcon(true);
         }
 
-        // --- 3. SISTEMA DE NOTIFICAÇÃO (TOAST) ---
+        // --- 4. SISTEMA DE NOTIFICAÇÃO (TOAST) ---
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -319,32 +360,26 @@
             
             container.appendChild(toast);
             
-            // Animação de entrada
-            setTimeout(() => {
-                toast.classList.remove('translate-y-10', 'opacity-0');
-            }, 10);
-
-            // Remove após 3 segundos
+            setTimeout(() => { toast.classList.remove('translate-y-10', 'opacity-0'); }, 10);
             setTimeout(() => {
                 toast.classList.add('translate-y-10', 'opacity-0');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
 
-        // --- 4. AVALIAÇÃO COM ESTRELAS ---
+        // --- 5. AVALIAÇÃO COM ESTRELAS ---
         function rateTopic(stars, containerId) {
             const container = document.getElementById(containerId);
             const starElements = container.querySelectorAll('i');
             
-            // Remove a classe de hover puro e fixa a cor
             container.classList.remove('star-rating'); 
 
             starElements.forEach((star, index) => {
                 if (index < stars) {
-                    star.classList.add('star-voted');
+                    star.classList.add('text-amber-400');
                     star.classList.remove('text-slate-300', 'dark:text-slate-600');
                 } else {
-                    star.classList.remove('star-voted');
+                    star.classList.remove('text-amber-400');
                     star.classList.add('text-slate-300', 'dark:text-slate-600');
                 }
             });
@@ -352,9 +387,8 @@
             showToast(`Voto de ${stars} estrela(s) computado!`, 'success');
         }
 
-        // --- 5. PUBLICAÇÃO DE POSTS (FRONTEND SIMULATION) ---
-        let postsCount = 12; // Valor inicial do perfil
-
+        // --- 6. PUBLICAÇÃO DE POSTS ---
+        let postsCount = 12; 
         function publishPost() {
             const textarea = document.getElementById('post-textarea');
             const content = textarea.value.trim();
@@ -364,11 +398,10 @@
                 return;
             }
 
-            // Cria o novo elemento HTML para o post
             const newPost = document.createElement('article');
-            newPost.className = 'bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-5 transition hover:shadow-md animate-fade-in-down';
+            newPost.className = 'bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-5 transition hover:shadow-md active';
+            newPost.style.animation = 'fadeIn 0.4s ease-out';
             
-            // Estrutura HTML do novo post
             newPost.innerHTML = `
                 <div class="flex items-center gap-3 mb-4">
                     <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full">
@@ -385,14 +418,10 @@
                 </div>
             `;
 
-            // Adiciona o post no topo do feed
             const feedContainer = document.getElementById('feed-container');
             feedContainer.insertBefore(newPost, feedContainer.firstChild);
 
-            // Limpa o campo de texto
             textarea.value = '';
-
-            // Atualiza o contador no perfil
             postsCount++;
             document.getElementById('user-posts-count').innerText = postsCount;
 
