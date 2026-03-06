@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações | Conecta SENAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+
+    <header class="bg-white border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 text-slate-500 hover:text-senai-red transition">
+                <i class="fa-solid fa-chevron-left"></i>
+                <span class="text-sm font-medium">Voltar</span>
+            </a>
+            <span class="font-bold text-lg tracking-tight">Ajustes</span>
+            <button class="text-xs font-bold text-senai-red uppercase tracking-widest">Salvar</button>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-6 mt-10">
+        <div class="space-y-8">
+            <section>
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Perfil Público</h2>
+                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm divide-y divide-slate-50">
+                    <div class="p-4 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700">Nome de Exibição</p>
+                            <p class="text-xs text-slate-400">Como você aparece para os outros.</p>
+                        </div>
+                        <input type="text" value="João Silva" class="text-right text-sm text-slate-600 bg-transparent focus:ring-0 border-none outline-none">
+                    </div>
+                    <div class="p-4 flex items-center justify-between">
+                        <p class="text-sm font-semibold text-slate-700">Biografia</p>
+                        <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Notificações</h2>
+                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <div class="p-4 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-semibold text-slate-700">Respostas de Feedback</p>
+                            <p class="text-xs text-slate-400">Avise-me quando a coordenação responder.</p>
+                        </div>
+                        <div class="w-10 h-5 bg-green-500 rounded-full relative cursor-pointer">
+                            <div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <button class="w-full py-4 text-red-500 font-semibold text-sm hover:bg-red-50 rounded-2xl transition">
+                Sair da Conta
+            </button>
+        </div>
+    </main>
+</body>
+</html>
