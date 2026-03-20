@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações | Conecta SENAI</title>
-    
+
     <link rel="stylesheet" href="style2.css">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <header class="app-header">
@@ -18,15 +20,18 @@
                 <i class="fa-solid fa-chevron-left"></i>
                 <span>Voltar</span>
             </a>
-            
-            <img src="img/red.png" alt="Logo Conecta SENAI" class="logo-img" style="height: 32px; cursor: default;">
-            
+
+            <img src="img/redwhite.png" alt="Logo Conecta SENAI" class="logo-img logo-light"
+                style="height: 32px; cursor: default;">
+            <img src="img/redblack.png" alt="Logo Conecta SENAI" class="logo-img logo-dark"
+                style="height: 32px; cursor: default;">
+
             <button class="btn-text-primary">Salvar</button>
         </div>
     </header>
 
     <main class="container config-main">
-        
+
         <section class="config-section">
             <h2 class="section-subtitle">Perfil Público</h2>
             <div class="card list-group">
@@ -35,7 +40,7 @@
                         <p class="item-title">Nome de Exibição</p>
                         <p class="item-desc">Como você aparece para os outros.</p>
                     </div>
-                    <input type="text" value="João Silva" class="input-clean">
+                    <input type="text" value="João Souza" class="input-clean">
                 </div>
                 <div class="list-item">
                     <p class="item-title">Biografia</p>
@@ -60,19 +65,11 @@
         </section>
 
         <button class="btn-danger-full">Sair da Conta</button>
-        
+
     </main>
 
-    <script>
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-
-        document.querySelectorAll('.toggle-switch').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                this.classList.toggle('active');
-            });
-        });
-    </script>
+    <script src="global.js"></script>
+    <script src="config.js"></script>
 </body>
+
 </html>

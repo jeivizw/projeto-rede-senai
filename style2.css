@@ -488,3 +488,17 @@ a, button {
 .toast.show { transform: translateY(0); opacity: 1; }
 .text-green { color: #22c55e; }
 .text-blue { color: #3b82f6; }
+
+
+.logo-dark {
+    display: none;
+}
+
+
+.dark .logo-light {
+    display: none !important;
+}
+
+.dark .logo-dark {
+    display: block !important;
+}

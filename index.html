@@ -31,11 +31,6 @@
         </form>
     </div>
 
-    <script>
-        // Mantém o modo escuro a funcionar se o utilizador já o tiver ativado antes
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-    </script>
+    <script src="global.js"></script>
 </body>
 </html>

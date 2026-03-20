@@ -658,3 +658,16 @@ a, button {
     margin-top: 4px;
     font-style: italic;
 }
+
+.logo-dark {
+    display: none;
+}
+
+
+.dark .logo-light {
+    display: none !important;
+}
+
+.dark .logo-dark {
+    display: block !important;
+}

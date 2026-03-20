@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conecta SENAI | Plataforma Unificada</title>
-    
+
     <link rel="stylesheet" href="style.css">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <header class="app-header">
@@ -18,20 +20,22 @@
                 <button class="menu-toggle" onclick="toggleMobileMenu()">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                
+
                 <div class="logo-container" onclick="switchTab('feed')">
-                    <img src="img/red.png" alt="Conecta SENAI" class="logo-img">
+                    <img src="img/redwhite.png" alt="Conecta SENAI" class="logo-img logo-light">
+                    <img src="img/redblack.png" alt="Conecta SENAI" class="logo-img logo-dark">
                 </div>
             </div>
-            
+
             <div class="header-right">
                 <button class="theme-toggle" onclick="toggleDarkMode()">
                     <i id="theme-icon" class="fa-solid fa-moon"></i>
                 </button>
                 <div class="divider"></div>
                 <div class="user-profile-btn" onclick="window.location.href='perfil.html'">
-                    <span>João Silva</span>
-                    <img src="https://i.pravatar.cc/150?img=11" alt="Perfil">
+                    <span>João Souza</span>
+                    <img src="https://thumbs.dreamstime.com/b/homem-cinzento-do-placeholder-da-foto-pessoa-gen%C3%A9rica-silhueta-cinzenta-em-um-fundo-branco-144511705.jpg"
+                        alt="Perfil">
                 </div>
             </div>
         </div>
@@ -40,9 +44,10 @@
     <div id="mobile-menu-overlay" class="mobile-overlay" onclick="toggleMobileMenu()"></div>
 
     <main class="main-layout">
-        
+
         <aside id="sidebar-menu" class="sidebar">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;" class="lg:hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;"
+                class="lg:hidden">
                 <span style="font-weight: 700; font-size: 18px;">Menu</span>
                 <button onclick="toggleMobileMenu()" style="color: var(--text-muted); font-size: 20px;">
                     <i class="fa-solid fa-xmark"></i>
@@ -59,9 +64,9 @@
                 <button onclick="switchTab('vitrine')" id="btn-vitrine" class="nav-btn">
                     <i class="fa-solid fa-rocket"></i> Vitrine de Projetos
                 </button>
-                
+
                 <div class="nav-divider"></div>
-                
+
                 <button onclick="window.location.href='perfil.html'" class="nav-btn">
                     <i class="fa-solid fa-user"></i> Meu Perfil
                 </button>
@@ -72,10 +77,11 @@
         </aside>
 
         <section class="content-area">
-            
+
             <div id="content-feed" class="section-content active">
                 <div class="card create-post">
-                    <img src="https://i.pravatar.cc/150?img=11" alt="Usuário">
+                    <img src="https://thumbs.dreamstime.com/b/homem-cinzento-do-placeholder-da-foto-pessoa-gen%C3%A9rica-silhueta-cinzenta-em-um-fundo-branco-144511705.jpg"
+                        alt="Usuário">
                     <div class="create-post-input">
                         <textarea id="post-textarea" placeholder="Compartilhe seu projeto ou publicidade..."></textarea>
                         <div class="create-post-actions">
@@ -83,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div id="feed-container">
                     <article class="card">
                         <div class="post-header">
@@ -93,9 +99,10 @@
                                 <p class="post-time">Há 2h</p>
                             </div>
                         </div>
-                        
+
                         <h3 class="post-title">Protótipo: Automação Residencial Sustentável</h3>
-                        <p class="post-body">Finalizamos o projeto de TCC! Um sistema de automação focado em redução do consumo de energia. O que acharam da ideia?</p>
+                        <p class="post-body">Finalizamos o projeto de TCC! Um sistema de automação focado em redução do
+                            consumo de energia. O que acharam da ideia?</p>
                     </article>
                 </div>
             </div>
@@ -105,13 +112,15 @@
                 <div class="card card-relative">
                     <div class="badge-warning">Em Análise</div>
                     <h3 class="post-title" style="margin-top: 8px;">Preços e Qualidade da Cantina</h3>
-                    <p class="post-body">Sugiro uma revisão nas opções de lanches naturais. Os valores atuais não condizem com a qualidade entregue aos alunos.</p>
+                    <p class="post-body">Sugiro uma revisão nas opções de lanches naturais. Os valores atuais não
+                        condizem com a qualidade entregue aos alunos.</p>
                 </div>
             </div>
 
             <div id="content-vitrine" class="section-content">
                 <div class="empty-state">
-                    <i class="fa-solid fa-folder-open" style="font-size: 40px; margin-bottom: 12px; color: #cbd5e1;"></i>
+                    <i class="fa-solid fa-folder-open"
+                        style="font-size: 40px; margin-bottom: 12px; color: #cbd5e1;"></i>
                     <p>Nenhum projeto em destaque no momento.</p>
                 </div>
             </div>
@@ -122,7 +131,7 @@
             <div class="card sticky-sidebar">
                 <h3 style="font-weight: bold; font-size: 14px; margin-bottom: 16px;">Métricas da Unidade</h3>
                 <div class="metric-list">
-                    
+
                     <div class="metric-item">
                         <div class="metric-header">
                             <span>Infraestrutura</span>
@@ -132,7 +141,7 @@
                             <div class="progress-fill bg-green" style="width: 92%;"></div>
                         </div>
                     </div>
-                    
+
                     <div class="metric-item">
                         <div class="metric-header">
                             <span>Cantina</span>
@@ -151,88 +160,8 @@
 
     <div id="toast-container"></div>
 
-    <script>
-        // Lógica de Tabs e Menu
-        function switchTab(tabId) {
-            document.querySelectorAll('.section-content').forEach(sec => sec.classList.remove('active'));
-            const targetSection = document.getElementById('content-' + tabId);
-            if(targetSection) targetSection.classList.add('active');
-
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById('btn-' + tabId);
-            if(activeBtn) activeBtn.classList.add('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function toggleMobileMenu() {
-            const sidebar = document.getElementById('sidebar-menu');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            sidebar.classList.toggle('open');
-            
-            if (sidebar.classList.contains('open')) {
-                overlay.style.display = 'block';
-                setTimeout(() => overlay.style.opacity = '1', 10);
-            } else {
-                overlay.style.opacity = '0';
-                setTimeout(() => overlay.style.display = 'none', 300);
-            }
-        }
-
-        // Dark Mode
-        const themeIcon = document.getElementById('theme-icon');
-        function updateIcon(isDark) { themeIcon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'; }
-        
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            updateIcon(isDark);
-        }
-
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            updateIcon(true);
-        }
-
-        // Toasts (Notificações)
-        function showToast(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check" style="color: #22c55e;"></i> <span>${message}</span>`;
-            
-            container.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // Publicar Post Simplificado
-        function publishPost() {
-            const textarea = document.getElementById('post-textarea');
-            if (textarea.value.trim() === "") return;
-
-            const newPost = document.createElement('article');
-            newPost.className = 'card';
-            newPost.innerHTML = `
-                <div class="post-header">
-                    <img src="https://i.pravatar.cc/150?img=11" alt="Você">
-                    <div>
-                        <h4 class="post-author">João Silva</h4>
-                        <p class="post-time">Agora mesmo</p>
-                    </div>
-                </div>
-                <p class="post-body">${textarea.value.replace(/\n/g, '<br>')}</p>
-            `;
-
-            const feedContainer = document.getElementById('feed-container');
-            feedContainer.insertBefore(newPost, feedContainer.firstChild);
-            textarea.value = '';
-            showToast("Publicação enviada!");
-        }
-    </script>
+    <script src="global.js"></script>
+    <script src="home.js"></script>
 </body>
+
 </html>
